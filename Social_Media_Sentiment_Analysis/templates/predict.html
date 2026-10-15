@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Predict · Social Media Sentiment Analysis{% endblock %}
+{% block heading %}Analyze a post{% endblock %}
+{% block content %}
+<div class="page-intro"><p>Paste a social post or tweet. The trained pipeline will predict one of the dataset's four sentiment labels.</p></div>
+<div class="predict-layout">
+  <section class="panel predict-panel"><div class="panel-heading"><div><h3>Text sentiment analyzer</h3><p>Use real text — no demo prediction is inserted automatically.</p></div><span class="mini-tag">LIVE INFERENCE</span></div>
+    <form method="post">
+      <label class="field-label" for="text">POST / TWEET TEXT</label>
+      <textarea id="text" name="text" maxlength="5000" placeholder="Example: I really enjoyed playing this game today..." required>{{ text_value }}</textarea>
+      <div class="form-hint">Tip: include the complete sentence for more context.</div>
+      <button class="button button-dark" type="submit">Analyze sentiment <span>→</span></button>
+    </form>
+  </section>
+  <aside class="result-panel">
+    {% if result %}
+      <div class="result-symbol {{ result.label|lower }}">{% if result.label == 'Positive' %}☺{% elif result.label == 'Negative' %}☹{% elif result.label == 'Neutral' %}◌{% else %}◇{% endif %}</div>
+      <div class="eyebrow">PREDICTION RESULT</div><h2 class="{{ result.label|lower }}">{{ result.label }}</h2>
+      <p>The model classified the submitted text as <strong>{{ result.label }}</strong>.</p>
+      {% if result.confidence is not none %}<div class="confidence-label"><span>Model score</span><strong>{{ result.confidence }}%</strong></div><div class="confidence-track"><div style="width: {{ result.confidence }}%"></div></div><small class="muted">This is the model's predicted-class probability, not a guarantee of correctness.</small>{% endif %}
+    {% else %}
+      <div class="result-symbol neutral">✳</div><div class="eyebrow">YOUR RESULT APPEARS HERE</div><h2>Ready to analyze?</h2><p>Submit text on the left to see the model's sentiment prediction.</p>
+      <div class="result-list"><span>● Positive</span><span>● Negative</span><span>● Neutral</span><span>● Irrelevant</span></div>
+    {% endif %}
+  </aside>
+</div>
+<div class="note-card"><strong>How it works</strong><p>The same saved pipeline performs text vectorization and classification. This avoids the old issue where training and prediction used different preprocessing functions.</p></div>
+{% endblock %}

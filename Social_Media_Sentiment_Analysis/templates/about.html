@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}About · Social Media Sentiment Analysis{% endblock %}
+{% block heading %}About this project{% endblock %}
+{% block content %}
+<div class="page-intro"><p>A practical upgrade to the existing Social Media Sentiment Analysis codebase, keeping the original dataset and project goal.</p></div>
+<section class="panel about-panel"><div class="about-icon">✳</div><h2>Social Media Sentiment Analysis</h2><p>This application explores social posts grouped by entity and sentiment, and classifies new text using a machine-learning pipeline.</p>
+<div class="about-grid"><div><span class="eyebrow">INPUT DATA</span><strong>CSV · text + labels</strong><p>Reads the original headerless dataset with explicit columns.</p></div><div><span class="eyebrow">FEATURE EXTRACTION</span><strong>TF-IDF n-grams</strong><p>Turns words and short phrases into numerical features.</p></div><div><span class="eyebrow">CLASSIFIER</span><strong>Logistic Regression</strong><p>A saved scikit-learn Pipeline is used for both training and prediction.</p></div><div><span class="eyebrow">EVALUATION</span><strong>Held-out test set</strong><p>Accuracy, macro precision/recall/F1 and class-level report.</p></div></div>
+<div class="note-card"><strong>Dataset limitation</strong><p>The supplied CSV has no date column, so this version does not display a fabricated sentiment-over-time chart. A real trend chart requires trustworthy timestamps.</p></div></section>
+{% endblock %}

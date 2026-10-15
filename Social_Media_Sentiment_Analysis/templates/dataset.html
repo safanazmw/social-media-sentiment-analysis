@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Dataset · Social Media Sentiment Analysis{% endblock %}
+{% block heading %}Explore dataset{% endblock %}
+{% block content %}
+<div class="page-intro"><p>Search and filter records from your supplied CSV. Showing {{ total_filtered }} matching rows.</p></div>
+<section class="panel filter-panel"><form method="get" class="filter-form">
+  <div class="filter-field"><label class="field-label" for="q">SEARCH POST TEXT</label><input id="q" name="q" value="{{ query }}" placeholder="Search words or phrases"></div>
+  <div class="filter-field"><label class="field-label" for="entity">ENTITY</label><select id="entity" name="entity"><option value="">All entities</option>{% for e in entities %}<option value="{{ e }}" {% if e == selected_entity %}selected{% endif %}>{{ e }}</option>{% endfor %}</select></div>
+  <div class="filter-field"><label class="field-label" for="sentiment">SENTIMENT</label><select id="sentiment" name="sentiment"><option value="">All sentiments</option>{% for s in sentiments %}<option value="{{ s }}" {% if s|lower == selected_sentiment|lower %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></div>
+  <button class="button button-dark filter-button" type="submit">Apply filters</button>
+</form></section>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>ENTITY</th><th>SENTIMENT</th><th>POST TEXT</th></tr></thead><tbody>{% for row in rows %}<tr><td class="entity-cell">{{ row.entity }}</td><td><span class="sentiment-chip {{ row.sentiment|lower }}">{{ row.sentiment }}</span></td><td class="tweet-cell">{{ row.text }}</td></tr>{% else %}<tr><td colspan="3">No records match these filters.</td></tr>{% endfor %}</tbody></table></div>
+<div class="pagination"><span>Page {{ page }} of {{ pages }}</span><div>{% if page > 1 %}<a href="{{ url_for('dataset', page=page-1, entity=selected_entity, sentiment=selected_sentiment, q=query) }}">← Previous</a>{% endif %}{% if page < pages %}<a href="{{ url_for('dataset', page=page+1, entity=selected_entity, sentiment=selected_sentiment, q=query) }}">Next →</a>{% endif %}</div></div>
+</section>
+{% endblock %}

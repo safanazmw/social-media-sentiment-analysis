@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Social Media Sentiment Analysis{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">S</span><div><strong>Social Media</strong><small>SENTIMENT ANALYSIS</small></div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">▦ <span>Dashboard</span></a>
+      <a class="nav-link {% if request.endpoint == 'predict' %}active{% endif %}" href="{{ url_for('predict') }}">✳ <span>Predict sentiment</span></a>
+      <a class="nav-link {% if request.endpoint == 'dataset' %}active{% endif %}" href="{{ url_for('dataset') }}">▤ <span>Explore dataset</span></a>
+      <a class="nav-link {% if request.endpoint == 'about' %}active{% endif %}" href="{{ url_for('about') }}">ⓘ <span>About project</span></a>
+      <div class="sidebar-bottom"><span class="status-dot"></span> Local model workspace<small>Uses your supplied dataset</small></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><span class="eyebrow">SOCIAL LISTENING / ML</span><h1>{% block heading %}Dashboard{% endblock %}</h1></div><div class="top-pill"><span class="status-dot"></span> Dataset connected</div></header>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}<div class="flash-list">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+      <footer>Social Media Sentiment Analysis <span>·</span> Flask + scikit-learn</footer>
+    </main>
+  </div>
+</body>
+</html>
